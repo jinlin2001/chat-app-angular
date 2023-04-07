@@ -10,6 +10,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { CreateRoomComponent } from './create-room/create-room.component';
 import { RoomComponent } from './room/room.component';
 import { FormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from '../+state';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +20,14 @@ import { FormsModule } from '@angular/forms';
     SidebarComponent,
     CreateRoomComponent,
     RoomComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ ...reducers }, {}),
+    EffectsModule.forRoot([]),
     RouterModule.forRoot(
       [
         { path: '', pathMatch: 'full', component: CreateRoomComponent },

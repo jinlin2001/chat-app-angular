@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { serverUrl } from '../../environment';
+import { Store } from '@ngrx/store';
+import { refreshAllRooms } from '../+state/actions/app.actions';
 @Injectable({
   providedIn: 'root',
 })
 export class SocketIOService {
   socket: Socket;
-  constructor() {
+  constructor(private store: Store) {
     this.socket = io(serverUrl);
     this.socket.on('connect', () => {
       console.log('connected');
@@ -14,9 +16,10 @@ export class SocketIOService {
     });
     this.socket.on('room-list', (data) => {
       console.log(data);
+      this.store.dispatch(refreshAllRooms({ rooms: data }));
     });
     this.socket.on('message', (data) => {
-      console.log(data);
+      console.log(data.message);
     });
   }
   createRoom(room: string, pass: string) {

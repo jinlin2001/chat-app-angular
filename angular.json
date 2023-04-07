@@ -5,12 +5,36 @@
   "projects": {
     "chat-app": {
       "projectType": "application",
+      "cli": {
+        "defaultCollection": "@ngrx/schematics",
+        "analytics": false,
+        "packageManager": "npm"
+      },
       "schematics": {
         "@schematics/angular:component": {
           "skipTests": true,
           "style": "scss"
         },
         "@schematics/angular:service": {
+          "skipTests": true
+        },
+        "@ngrx/schematics:*": {
+          "module": "app.module.ts",
+          "statePath": "+state"
+        },
+        "@ngrx/schematics:action": {
+          "skipTests": true,
+          "prefix": "app"
+        },
+        "@ngrx/schematics:reducer": {
+          "skipTests": true
+        },
+        "@ngrx/schematics:effect": {
+          "skipTests": true,
+          "prefix": "app",
+          "module": "app.module.ts"
+        },
+        "@ngrx/schematics:selector": {
           "skipTests": true
         }
       },

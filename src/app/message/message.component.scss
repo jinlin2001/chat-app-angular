@@ -1,0 +1,30 @@
+.test {
+  position: relative;
+  min-height: 2.5rem;
+  background: pink;
+}
+
+.test:after {
+  content: "";
+  top: 65%;
+  right: -0.9rem;
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  border-top-left-radius: 60%;
+  border-top-right-radius: 60%;
+  box-shadow: -0.5rem -0.25rem 0 0 pink;
+}
+.test:before {
+  content: "";
+  top: calc(65% - 1rem);
+  left: -0.9rem;
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  border-bottom-left-radius: 60%;
+  border-bottom-right-radius: 60%;
+  box-shadow: 0.5rem 0.25rem 0 0 pink;
+}

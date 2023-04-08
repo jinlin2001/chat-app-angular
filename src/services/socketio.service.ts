@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { serverUrl } from '../../environment';
+import { serverUrl } from '../environment';
 import { Store } from '@ngrx/store';
 import { refreshAllRooms } from '../+state/actions/app.actions';
 @Injectable({

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SocketIOService } from '../services/socketio.service';
+import { SocketIOService } from '../../services/socketio.service';
 
 @Component({
   templateUrl: './create-room.component.html',

@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
-import { AppComponent } from './app.component';
+import { AppComponent } from './app/app.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { CreateRoomComponent } from './create-room/create-room.component';

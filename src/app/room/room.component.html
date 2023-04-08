@@ -1,1 +1,24 @@
-<p>room works!</p>
+<div class="d-flex flex-column h-100">
+  <div class="message-container">
+    <app-message *ngFor="let item of list"></app-message>
+  </div>
+  <form class="d-flex flex-grow-1">
+    <div class="form-floating input-box">
+      <textarea
+        type="text"
+        class="form-control"
+        id="messageBox"
+        name="messageBox"
+        placeholder="Enter Message"
+      ></textarea>
+      <label for="messageBox">Enter Message</label>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary flex-grow-1"
+      (click)="addRoom()"
+    >
+      Enter
+    </button>
+  </form>
+</div>

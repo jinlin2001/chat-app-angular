@@ -1,0 +1,16 @@
+.burger-icon {
+  content: url("../../assets/list.svg");
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  cursor: pointer;
+}
+
+.fs-11 {
+  width: 1rem;
+  height: 1rem;
+  &:hover {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}

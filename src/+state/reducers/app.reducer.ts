@@ -1,18 +1,19 @@
 import { createReducer, on } from '@ngrx/store';
+import { RoomListState } from 'src/services/model';
 import * as AppActions from '../actions/app.actions';
 
 export const allRooms = createReducer(
-  [] as string[],
-  on(AppActions.refreshAllRooms, (_, { rooms }) => {
-    return [...rooms];
-  })
+  { list: [] } as RoomListState,
+  on(AppActions.refreshRooms, (_, { list }) => ({
+    list: [...list],
+  }))
 );
 
-const initialJoined: { room: string | null } = { room: null };
 export const joined = createReducer(
-  initialJoined,
-  on(AppActions.join, (_, { roomId }) => ({
-    room: roomId,
+  null as any,
+  on(AppActions.join, (_, { id, displayName }) => ({
+    id,
+    displayName,
   })),
-  on(AppActions.leave, () => ({ room: null }))
+  on(AppActions.leave, () => null as any)
 );

@@ -2,39 +2,62 @@ import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { serverUrl } from '../environment';
 import { Store } from '@ngrx/store';
-import { refreshAllRooms } from '../+state/actions/app.actions';
+import { actions } from '../+state';
+import { Observable, Subject } from 'rxjs';
+import { MsgResponse } from './model';
+
 @Injectable({
   providedIn: 'root',
 })
 export class SocketIOService {
-  socket: Socket;
+  socket: Socket = io(serverUrl);
+  newMsg$ = new Subject<MsgResponse>();
+
   constructor(private store: Store) {
-    this.socket = io(serverUrl);
     this.socket.on('connect', () => {
-      console.log('connected');
-      this.socket.emit('get-rooms');
+      this.socket.emit('get', (list: string[]) => {
+        this.store.dispatch(actions.refreshRooms({ list }));
+      });
     });
-    this.socket.on('room-list', (data) => {
-      console.log(data);
-      this.store.dispatch(refreshAllRooms({ rooms: data }));
+
+    this.socket.on('list', (list: string[]) => {
+      this.store.dispatch(actions.refreshRooms({ list }));
     });
-    this.socket.on('message', (data) => {
-      console.log(data.message);
+
+    this.socket.on('msg', (msg: MsgResponse) => {
+      this.newMsg$.next(msg);
     });
   }
-  createRoom(room: string, pass: string) {
-    this.socket.emit('create-room', room, pass);
+
+  create(id: string, pass: string) {
+    return new Observable((observer) => {
+      this.socket.emit('create', id, pass, (status: boolean) => {
+        observer.next(status);
+      });
+    });
   }
-  joinRoom(room: string, pass: string) {
-    this.socket.emit('join', room, pass);
+
+  join(id: string, pass: string) {
+    return new Observable((observer) => {
+      this.socket.emit('join', id, pass, (status: boolean) => {
+        observer.next(status);
+      });
+    });
   }
+
+  leave(id: string) {
+    this.socket.emit('leave', id);
+  }
+
   getRooms() {
-    this.socket.emit('get-rooms');
+    return new Observable((observer) => {
+      this.socket.emit('get', (list: string[]) => {
+        observer.next(list);
+      });
+    });
   }
-  leaveRoom(room: string) {
-    this.socket.emit('leave', room);
-  }
-  postMessage(room: string, message: string) {
-    this.socket.emit('post-message', room, message);
+
+  post(id: string, msg: string, displayName: string) {
+    this.socket.emit('post', id, msg, displayName);
   }
 }

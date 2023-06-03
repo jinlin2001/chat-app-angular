@@ -1,13 +1,7 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectRoomList, RoomList } from '../../+state/selectors/app.selectors';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
+import { selectors } from '../../+state';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,17 +9,24 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  allRooms: RoomList = [];
-  allRooms$!: Subscription;
+  @Input() showTitle!: boolean;
+  all$!: Subscription;
+  roomList!: string[];
+  joined?: string;
+
   constructor(private store: Store) {}
+
   ngOnInit(): void {
-    this.allRooms$ = this.store
-      .select<RoomList>(selectRoomList)
-      .subscribe((rooms) => {
-        this.allRooms = rooms;
-      });
+    this.all$ = combineLatest([
+      this.store.select(selectors.allRooms),
+      this.store.select(selectors.joined),
+    ]).subscribe(([rooms, joined]) => {
+      this.roomList = rooms.list.filter((room) => room !== joined?.id);
+      this.joined = joined?.id;
+    });
   }
+
   ngOnDestroy(): void {
-    this.allRooms$.unsubscribe();
+    this.all$.unsubscribe();
   }
 }

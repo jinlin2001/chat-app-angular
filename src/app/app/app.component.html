@@ -1,10 +1,37 @@
-<div class="d-flex flex-row h-100">
-  <div class="col-3 h-100 bg-primary">
-    <app-sidebar></app-sidebar>
+<div class="d-flex h-100 text-bg-dark user-select-none bg-gradient">
+  <div class="d-none d-md-block col-md-3 h-100">
+    <app-sidebar [showTitle]="true"></app-sidebar>
   </div>
-  <div class="col-9 h-100 bg-secondary">
-    <!-- <router-outlet></router-outlet> -->
-    <!-- <app-room></app-room> -->
-    <app-message></app-message>
+  <div class="col-12 col-md-9 h-100">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<span
+  class="burger-icon d-md-none fs-11 text-light"
+  data-bs-toggle="offcanvas"
+  data-bs-target="#offcanvasWithBothOptions"
+  aria-controls="offcanvasWithBothOptions"
+></span>
+
+<div
+  class="offcanvas offcanvas-start text-bg-secondary bg-gradient user-select-none d-md-none"
+  data-bs-scroll="true"
+  tabindex="-1"
+  id="offcanvasWithBothOptions"
+  aria-labelledby="offcanvasWithBothOptionsLabel"
+>
+  <div class="offcanvas-header bg-gradient ps-2 pb-0">
+    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
+      Active Chats
+    </h5>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <app-sidebar [showTitle]="false"></app-sidebar>
   </div>
 </div>

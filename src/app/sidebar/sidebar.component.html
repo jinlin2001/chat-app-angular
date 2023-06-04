@@ -1,4 +1,4 @@
-<div class="text-bg-secondary bg-gradient h-100">
+<div class="text-bg-secondary h-100">
   <h5 *ngIf="showTitle" class="pt-3 px-2 mb-0">Active Chats</h5>
   <ul class="list-group list-group-flush">
     <li
@@ -6,7 +6,7 @@
       class="list-group-item bg-transparent text-light d-flex justify-content-between"
     >
       {{ joined }}
-      <span class="badge bg-gradient text-bg-success">Joined</span>
+      <span class="badge text-bg-success">Joined</span>
     </li>
     <li
       *ngFor="let room of roomList"
@@ -17,7 +17,7 @@
         *ngIf="!joined"
         [routerLink]="['/join', room]"
         routerLinkActive="router-link-active"
-        class="badge bg-gradient btn btn-primary"
+        class="badge btn btn-primary"
         >Join</span
       >
     </li>

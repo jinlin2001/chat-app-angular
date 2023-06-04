@@ -28,37 +28,32 @@ export class RoomComponent implements OnInit, OnDestroy, AfterViewInit {
   displayName!: string;
   msgs: Msg[] = [];
   newMsg$!: Subscription;
-  ob!: MutationObserver;
-  test = false;
+  scroller!: MutationObserver;
   constructor(
     private socketIO: SocketIOService,
     private store: Store,
     private toastr: ToastrService,
     private ngZone: NgZone
-  ) {
-    this.test = true;
-  }
+  ) {}
   ngAfterViewInit(): void {
     const { nativeElement } = this.msgRef;
-    this.ob = new MutationObserver((mutations) => {
-      let total = 0;
-      for (const m of mutations) {
-        const { addedNodes } = m;
-        addedNodes.forEach((n) => {
-          if (n.nodeType === n.ELEMENT_NODE) {
-            total += (n as HTMLElement).offsetHeight;
+    this.scroller = new MutationObserver((mutations) => {
+      const { scrollTop, clientHeight, scrollHeight } = nativeElement;
+      let additionalHeight = 0;
+      for (const mutation of mutations) {
+        const { addedNodes } = mutation;
+        addedNodes.forEach((newNode) => {
+          if (newNode.nodeType === newNode.ELEMENT_NODE) {
+            additionalHeight += (newNode as HTMLElement).offsetHeight;
           }
         });
       }
-      const view = nativeElement.scrollTop + nativeElement.clientHeight;
-      const full = nativeElement.scrollHeight;
-      const diff = Math.floor(full - view);
-      if (diff <= total) {
-        nativeElement.scrollTop = nativeElement.scrollHeight;
+      const viewport = scrollTop + clientHeight;
+      if (Math.floor(scrollHeight - viewport) <= additionalHeight) {
+        nativeElement.scrollTop = scrollHeight;
       }
     });
-    this.ob.observe(nativeElement, { childList: true });
-    this.toastr.success(`You have joined chat: ${this.roomId}`);
+    this.scroller.observe(nativeElement, { childList: true });
     this.ngZone.runOutsideAngular(() => {
       this.msgArea.nativeElement.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
@@ -67,18 +62,11 @@ export class RoomComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     });
+    this.toastr.success(`You have joined chat: ${this.roomId}`);
   }
 
   ngOnInit(): void {
-    console.log(this.test, 'test val');
     const { socketIO, msgs, store } = this;
-    this.newMsg$ = socketIO.newMsg$
-      .pipe(filter((msg) => msg.id === this.roomId))
-      .subscribe((msg) => {
-        console.log('msg received');
-        msgs.push({ self: false, msg: msg.msg, displayName: msg.displayName });
-      });
-
     store
       .select(selectors.joined)
       .pipe(take(1))
@@ -86,11 +74,16 @@ export class RoomComponent implements OnInit, OnDestroy, AfterViewInit {
         this.roomId = id;
         this.displayName = displayName;
       });
+    this.newMsg$ = socketIO.newMsg$
+      .pipe(filter((msg) => msg.id === this.roomId))
+      .subscribe((msg) => {
+        msgs.push({ self: false, msg: msg.msg, displayName: msg.displayName });
+      });
   }
 
   ngOnDestroy(): void {
     this.newMsg$.unsubscribe();
-    this.ob.disconnect();
+    this.scroller.disconnect();
   }
 
   post() {

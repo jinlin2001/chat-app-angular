@@ -13,7 +13,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   all$!: Subscription;
   roomList!: string[];
   joined?: string;
-
   constructor(private store: Store) {}
 
   ngOnInit(): void {

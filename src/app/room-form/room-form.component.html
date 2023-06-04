@@ -6,34 +6,34 @@
   #form="ngForm"
 >
   <h3>{{ title }}</h3>
-  <div class="form-floating mb-3 text-bg-light">
+  <div class="form-floating mb-3 text-bg-secondary">
     <input
       ngModel
       id="display-name"
       name="displayName"
-      class="form-control rounded-0"
+      class="form-control rounded-0 text-bg-secondary border-0"
       type="text"
       placeholder="Enter Display Name"
       required
     /><label for="display-name">Your Display Name</label>
   </div>
-  <div *ngIf="create" class="form-floating mb-3 text-bg-light">
+  <div *ngIf="create" class="form-floating mb-3 text-bg-secondary">
     <input
       ngModel
       id="room-id"
       name="roomId"
-      class="form-control rounded-0"
+      class="form-control rounded-0 border-0 text-bg-secondary"
       type="text"
       placeholder="Enter Room Name"
       required
     /><label for="room-name">Room Name</label>
   </div>
-  <div class="form-floating mb-3 text-bg-light">
+  <div class="form-floating mb-3 text-bg-secondary">
     <input
       ngModel
       id="room-pass"
       name="roomPass"
-      class="form-control rounded-0"
+      class="form-control rounded-0 text-bg-secondary border-0"
       type="text"
       placeholder="Enter Room Password"
       required

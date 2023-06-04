@@ -8,6 +8,9 @@
 
 .height-25 {
   height: 25px;
+  span {
+    line-height: 25px;
+  }
 }
 
 .h-30 {
@@ -24,4 +27,8 @@
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.form-control:focus {
+  box-shadow: none;
 }

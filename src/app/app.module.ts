@@ -57,7 +57,11 @@ import { AppEffects } from '../+state/effects/app.effects';
       ],
       { useHash: true }
     ),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    StoreDevtoolsModule.instrument({
+      name: 'chat-app',
+      maxAge: 25,
+      logOnly: !isDevMode(),
+    }),
   ],
   providers: [{ provide: ErrorHandler, useClass: ErrorHandlerService }],
   bootstrap: [AppComponent],

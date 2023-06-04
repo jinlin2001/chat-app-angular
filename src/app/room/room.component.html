@@ -1,7 +1,9 @@
 <div class="d-flex flex-column h-100">
-  <div class="height-25 d-flex justify-content-end align-items-center">
+  <div
+    class="height-25 bg-transparent d-flex justify-content-end align-items-center"
+  >
     <span
-      class="btn btn-warning bg-gradient text-light rounded-0 cursor-pointer py-0 px-1"
+      class="btn btn-warning text-light border-0 rounded-0 cursor-pointer py-0 px-1"
       (click)="leave()"
       >Leave</span
     >
@@ -10,10 +12,10 @@
     <app-message *ngFor="let msg of msgs" [msg]="msg"></app-message>
   </div>
   <div class="d-flex h-76">
-    <div class="form-floating w-90 h-100 text-bg-light">
+    <div class="form-floating w-90 h-100 text-bg-secondary">
       <textarea
         type="text"
-        class="form-control rounded-0 h-100"
+        class="form-control rounded-0 h-100 text-bg-secondary border-0"
         id="msgArea"
         name="msgArea"
         placeholder="Enter Message"

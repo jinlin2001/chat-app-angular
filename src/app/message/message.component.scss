@@ -1,45 +1,38 @@
 $selfMsgColor: rgb(25, 135, 84);
 $otherMsgColor: rgb(13, 110, 253);
 .self-msg {
-  position: relative;
-  min-height: 2.5rem;
   background: $selfMsgColor;
+  &::after {
+    content: "";
+    top: calc(100% - 1rem);
+    right: -0.9rem;
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    background-color: transparent;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    box-shadow: -0.5rem -0.25rem 0 0 $selfMsgColor;
+  }
 }
 .other-msg {
-  position: relative;
-  min-height: 2.5rem;
   background: $otherMsgColor;
+  &::before {
+    content: "";
+    top: calc(100% - 1rem);
+    left: -0.9rem;
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    background-color: transparent;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    box-shadow: 0.5rem -0.25rem 0 0 $otherMsgColor;
+  }
 }
-
-.self-msg:after {
-  content: "";
-  top: calc(100% - 1rem);
-  right: -0.9rem;
-  position: absolute;
-  width: 1rem;
-  height: 1rem;
-  background-color: transparent;
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50%;
-  box-shadow: -0.5rem -0.25rem 0 0 $selfMsgColor;
-}
-.other-msg:before {
-  content: "";
-  top: calc(100% - 1rem);
-  left: -0.9rem;
-  position: absolute;
-  width: 1rem;
-  height: 1rem;
-  background-color: transparent;
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50%;
-  box-shadow: 0.5rem -0.25rem 0 0 $otherMsgColor;
-}
-
 .mw-85 {
   max-width: 85px;
 }
-
 .position-absolute {
   top: calc(100% - 1rem);
 }

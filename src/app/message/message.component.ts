@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { Msg } from 'src/services/model';
 
@@ -6,8 +13,7 @@ import { Msg } from 'src/services/model';
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessageComponent {
+export default class MessageComponent {
   @Input() msg!: Msg;
 }

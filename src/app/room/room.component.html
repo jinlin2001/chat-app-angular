@@ -2,35 +2,32 @@
   <div class="height-25 d-flex justify-content-end align-items-center">
     <span
       class="btn btn-warning bg-gradient text-light rounded-0 cursor-pointer py-0 px-1"
-      (click)="leaveRoom()"
+      (click)="leave()"
       >Leave</span
     >
   </div>
   <div class="d-flex flex-column p-2 overflow-auto flex-grow-1" #msgRef>
-    <ng-container *ngIf="msgs.length">
-      <app-message *ngFor="let msg of msgs" [msg]="msg"></app-message>
-    </ng-container>
+    <app-message *ngFor="let msg of msgs" [msg]="msg"></app-message>
   </div>
-  <form class="d-flex h-76" autocomplete="off">
+  <div class="d-flex h-76">
     <div class="form-floating w-90 h-100 text-bg-light">
       <textarea
         type="text"
         class="form-control rounded-0 h-100"
         id="msgArea"
         name="msgArea"
-        (keyup)="onKeyUp($event)"
         placeholder="Enter Message"
         #msgArea
       ></textarea>
       <label for="msgArea">Enter Message</label>
     </div>
     <button
-      type="submit"
-      class="btn btn-primary flex-grow-1 rounded-0"
+      type="button"
       (click)="post()"
+      class="btn btn-primary flex-grow-1 rounded-0"
       #submitBtn
     >
       Enter
     </button>
-  </form>
+  </div>
 </div>

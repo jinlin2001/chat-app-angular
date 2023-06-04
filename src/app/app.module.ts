@@ -10,13 +10,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from '../+state';
 import { ActivateGuard } from '../services/activate.guard';
 import { AppComponent } from './app/app.component';
-import { MessageComponent } from './message/message.component';
+import MessageComponent from './message/message.component';
 import { RoomFormComponent } from './room-form/room-form.component';
 import { RoomComponent } from './room/room.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorHandlerService } from 'src/services/error-handler.service';
+import { AppEffects } from '../+state/effects/app.effects';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { ErrorHandlerService } from 'src/services/error-handler.service';
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot({ ...reducers }, {}),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AppEffects]),
     RouterModule.forRoot(
       [
         {

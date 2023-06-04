@@ -5,8 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 export class ErrorHandlerService implements ErrorHandler {
   constructor(private injector: Injector) {}
 
-  handleError(): void {
+  handleError(error: any): void {
     const toastr = this.injector.get(ToastrService);
     toastr.warning('Unexpected error occurred.');
+    console.log(error);
   }
 }

@@ -5,7 +5,6 @@
   left: 1rem;
   cursor: pointer;
 }
-
 .fs-11 {
   width: 1rem;
   height: 1rem;
@@ -13,4 +12,9 @@
     width: 1.1rem;
     height: 1.1rem;
   }
+}
+.position-fixed {
+  top: 0;
+  left: 0;
+  opacity: 0.5;
 }

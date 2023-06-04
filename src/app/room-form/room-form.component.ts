@@ -42,8 +42,16 @@ export class RoomFormComponent implements OnDestroy {
   onSubmit(ngForm: NgForm) {
     const { roomId, roomPass, displayName } = ngForm.value;
     if (this.create) {
+      if (this.socketIO.roomSet.has(roomId)) {
+        this.toastSvcs.warning(`Chat Room: ${roomId} already exist`);
+        return;
+      }
       this.newRoom(roomId, roomPass, displayName);
     } else {
+      if (!this.socketIO.roomSet.has(this.roomId!)) {
+        this.toastSvcs.warning(`Chat Room: ${this.roomId} does not exist`);
+        return;
+      }
       this.joinRoom(roomPass, displayName);
     }
   }

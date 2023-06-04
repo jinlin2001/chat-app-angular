@@ -3,3 +3,4 @@ import { JoinedState, RoomListState } from 'src/services/model';
 
 export const allRooms = createFeatureSelector<RoomListState>('allRooms');
 export const joined = createFeatureSelector<JoinedState>('joined');
+export const connected = createFeatureSelector<boolean>('connected');

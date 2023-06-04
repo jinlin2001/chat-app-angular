@@ -2,19 +2,20 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  NgZone,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription, filter, take } from 'rxjs';
-import { SocketIOService } from 'src/services/socketio.service';
-import { actions, selectors } from 'src/+state/';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription, filter, take } from 'rxjs';
+import { actions, selectors } from 'src/+state/';
 import { Msg } from 'src/services/model';
+import { SocketIOService } from 'src/services/socketio.service';
 
 @Component({
+  selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
@@ -28,12 +29,15 @@ export class RoomComponent implements OnInit, OnDestroy, AfterViewInit {
   msgs: Msg[] = [];
   newMsg$!: Subscription;
   ob!: MutationObserver;
+  test = false;
   constructor(
     private socketIO: SocketIOService,
     private store: Store,
-    private router: Router,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private ngZone: NgZone
+  ) {
+    this.test = true;
+  }
   ngAfterViewInit(): void {
     const { nativeElement } = this.msgRef;
     this.ob = new MutationObserver((mutations) => {
@@ -55,9 +59,18 @@ export class RoomComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.ob.observe(nativeElement, { childList: true });
     this.toastr.success(`You have joined chat: ${this.roomId}`);
+    this.ngZone.runOutsideAngular(() => {
+      this.msgArea.nativeElement.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          this.submitBtn.nativeElement.click();
+        }
+      });
+    });
   }
 
   ngOnInit(): void {
+    console.log(this.test, 'test val');
     const { socketIO, msgs, store } = this;
     this.newMsg$ = socketIO.newMsg$
       .pipe(filter((msg) => msg.id === this.roomId))
@@ -90,17 +103,7 @@ export class RoomComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onKeyUp(event: KeyboardEvent) {
-    const { nativeElement } = this.submitBtn;
-    if (event.key === 'Enter') {
-      nativeElement.click();
-    }
-  }
-
-  leaveRoom() {
-    this.socketIO.leave(this.roomId);
-    this.store.dispatch(actions.leave());
-    this.router.navigate(['/']);
-    this.toastr.success(`You have left chat: ${this.roomId}.`);
+  leave() {
+    this.store.dispatch(actions.leave({ id: this.roomId }));
   }
 }

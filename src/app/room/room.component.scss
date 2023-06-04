@@ -32,3 +32,14 @@
 .form-control:focus {
   box-shadow: none;
 }
+
+.play-fill {
+  content: url("../../assets/play-fill.svg");
+}
+
+.btn.btn-secondary {
+  background-color: var(--bs-btn-hover-bg);
+  &:hover {
+    opacity: 0.8;
+  }
+}
